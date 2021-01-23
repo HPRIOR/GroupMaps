@@ -26,11 +26,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\file1.tsx" />
+    <None Remove="ClientApp\src\components\GoogleMap.tsx" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\components\" />
+    <TypeScriptCompile Remove="ClientApp\src\App.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\GetApiKey.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Controllers\" />
   </ItemGroup>
 
