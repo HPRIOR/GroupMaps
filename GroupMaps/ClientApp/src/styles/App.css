@@ -1,0 +1,6 @@
+﻿#main-window {
+    display: grid;
+    height: 98vh;
+    grid-template-columns: auto 300px;
+    grid-template-rows: 100%;
+}
