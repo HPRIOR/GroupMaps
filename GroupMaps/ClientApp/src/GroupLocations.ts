@@ -8,37 +8,55 @@
 }
 
 type Grid = {
-    [key:string] : Location
-
+   [key:string] : Location
 }
 
 
 const groupLocations = (locations: Location[], groupByDistance: number): Location[][] => {
-    throw new DOMException;
+    const grid = getLocationPlaceInGrid(locations, groupByDistance);
+    const adjacentGridCoords = groupAdjecentGridTiles(grid);
+    let adjacentLocations = [];
+    adjacentGridCoords.forEach(coordGroup => {
+        let group = [];
+        coordGroup.forEach(gridCoord => {
+            group = group.concat(grid[gridCoord]);
+        });
+        adjacentLocations.push(group);
+    });
+    return adjacentLocations;
 }
 
-const getLocationPlaceInGrid = (locaitons: Location[], groupByDistance: number): Grid => {
-    throw new DOMException;
+const getLocationPlaceInGrid = (locations: Location[], groupByDistance: number): Grid => {
+    let grid = {};
+    const minLat = Math.min(...locations.map(x => x.norm_lat));
+    const minLng = Math.min(...locations.map(x => x.norm_lng));
+    locations.forEach(location => {
+        const coord =
+            [Math.floor((location.norm_lat - minLat) / groupByDistance),
+            Math.floor((location.norm_lng - minLng / groupByDistance))].toString();
+        grid[coord] ? grid[coord].push(location) : grid[coord] = [location];
+    });
+    return grid;
 } 
 
 const groupAdjecentGridTiles = (grid: Grid): (Set<string> | null)[] => {
-    let tiles: Set<string> = new Set(Object.keys(grid));
-    let visited: Set<string> = new Set();
+    let tileCoords: Set<string> = new Set(Object.keys(grid));
+    let visitedCoords: Set<string> = new Set();
     const directions: [number, number][] = [[0, 1], [1, 0], [-1, 0], [0, -1]]
-    const group = (currentSquare: string, groupSet: Set<string> = new Set()):  Set<string> | null => {
-            if (!tiles.has(currentSquare) || visited.has(currentSquare))
+    const group = (currentSquare: string, currentCoordGroup: Set<string> = new Set()):  Set<string> | null => {
+            if (!tileCoords.has(currentSquare) || visitedCoords.has(currentSquare))
                 return null
-            visited.add(currentSquare)
-            groupSet.add(currentSquare)
+            visitedCoords.add(currentSquare)
+            currentCoordGroup.add(currentSquare)
             for (let dir of directions) {
                 const newDirection =
                     String(parseInt(currentSquare[0]) + dir[0]) + ',' + String(parseInt(currentSquare[2]) + dir[1])
-                group(newDirection, groupSet);
+                group(newDirection, currentCoordGroup);
             }
-            return groupSet;
+            return currentCoordGroup;
     }
     let adjacentGroups = [];
-    for (let tile in tiles)
+    for (let tile in tileCoords)
         adjacentGroups.push(group(tile));
     return adjacentGroups.filter(x => x != null);
 
