@@ -50,6 +50,7 @@ const groupAdjecentGridTiles = (grid: Grid): (Set<string> | null)[] => {
     let tileCoords: Set<string> = new Set(Object.keys(grid));
     let visitedCoords: Set<string> = new Set();
     const directions = [[0, 1], [1, 0], [-1, 0], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]]
+
     const group = (currentSquare: string, currentCoordGroup: Set<string> = new Set()): Set<string> | null => {
         if (!tileCoords.has(currentSquare) || visitedCoords.has(currentSquare))
             return null
@@ -62,10 +63,12 @@ const groupAdjecentGridTiles = (grid: Grid): (Set<string> | null)[] => {
         }
         return currentCoordGroup;
     }
+
     let adjacentGroups = [];
     for (let tile of tileCoords) {
         adjacentGroups.push(group(tile));
     }
     return adjacentGroups.filter(x => x != null);
 }
+
 export default groupLocations
