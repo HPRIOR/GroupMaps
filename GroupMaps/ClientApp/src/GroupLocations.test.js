@@ -106,4 +106,5 @@ it('Diagonal adjacent groups produce as many groups as locations - distance: hal
     
 });
 
+//Todo add test which adds a 'merging' coordinate between two groups and see if the result is one group (it should be!) 
 
