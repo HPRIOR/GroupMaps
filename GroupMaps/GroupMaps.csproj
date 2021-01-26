@@ -34,7 +34,6 @@
     <TypeScriptCompile Remove="ClientApp\src\App.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\GetApiKey.ts" />
     <TypeScriptCompile Remove="ClientApp\src\GroupLocations.ts" />
-    <TypeScriptCompile Remove="ClientApp\src\test.tsx" />
   </ItemGroup>
 
   <ItemGroup>
