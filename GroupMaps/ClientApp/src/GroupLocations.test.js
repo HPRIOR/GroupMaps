@@ -1,4 +1,4 @@
-﻿import  groupLocations  from './GroupLocations'
+﻿import groupLocations from './GroupLocations'
 //const sum = (a, b) => a + b;
 
 //it('sums numbers', () => {
@@ -6,29 +6,29 @@
 //    expect(sum(2, 2)).toEqual(4);
 //});
 
-const test_locations_two_groups_at_distance_1 = [
+const test_locations_1 = [
     {
         id: 1,
         lat: 0,
         lng: 1,
-        norm_lng: 181,
         norm_lat: 90,
+        norm_lng: 181,
         postcode: "N7 9RA"
     },
     {
         id: 2,
         lat: 0,
         lng: 0,
+        norm_lat: 90,
         norm_lng: 180,
-        norm_lat: 91,
         postcode: "NW5 2NJ"
     },
     {
         id: 3,
         lat: 4,
         lng: 4,
-        norm_lng: 184,
         norm_lat: 94,
+        norm_lng: 184,
         postcode: "N7 2G6"
     },
     {
@@ -41,13 +41,14 @@ const test_locations_two_groups_at_distance_1 = [
     }
 ]
 
-
 it('Does not throw an error', () => {
-    expect(() => groupLocations(test_locations_two_groups_at_distance_1, 1)).not.toThrow();
+    expect(() => groupLocations(test_locations_1, 1)).not.toThrow();
 });
 
-
-it('Test location produces two groups at distance of 1', () => {
-    expect(groupLocations(test_locations_two_groups_at_distance_1, 1).length).toEqual(2);
+it('Produces two groups at distance of 1', () => {
+    expect(groupLocations(test_locations_1, 1).length).toEqual(2);
 })
 
+it('Produces 1 group at a distance equal to max(lng, lat)', () => {
+    expect(groupLocations(test_locations_1, 5).length).toEqual(1)
+})
