@@ -1,11 +1,4 @@
-﻿type Location = {
-    id: number,
-    lat: number,
-    lng: number,
-    norm_lng: number,
-    norm_lat: number,
-    postcode: string
-}
+﻿import Location from './ObjectTypes/Location';
 
 type Grid = {
     [key: string]: Location
