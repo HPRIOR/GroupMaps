@@ -70,12 +70,13 @@ const groupAdjecentGridTiles = (grid: Grid): (Set<string> | null)[] => {
         return currentCoordGroup;
     }
 
-    let adjacentGroups = [];
-    for (let tile of tileCoords) {
-        if (!visitedCoords.has(tile))
-            adjacentGroups.push(group(tile));
-    }
-    return adjacentGroups;
+    return Array.from(tileCoords)
+        .map(tile => {
+            if (!visitedCoords.has(tile))
+                return group(tile);
+        })
+        .filter(x => x !== undefined)
+
 }
 
 export default groupLocations
