@@ -1,15 +1,16 @@
 {
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "noImplicitAny": false,
-    "noEmitOnError": true,
-    "removeComments": false,
-    "sourceMap": true,
-    "target": "es5",
-    "jsx": "react"
-  },
-  "exclude": [
-    "node_modules",
-    "wwwroot"
-  ]
+    "compilerOptions": {
+        "downlevelIteration": true,
+        "esModuleInterop": true,
+        "noImplicitAny": false,
+        "noEmitOnError": true,
+        "removeComments": false,
+        "sourceMap": true,
+        "target": "es5",
+        "jsx": "react"
+    },
+    "exclude": [
+        "node_modules",
+        "wwwroot"
+    ]
 }
