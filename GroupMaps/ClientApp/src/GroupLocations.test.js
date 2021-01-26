@@ -77,6 +77,125 @@ const diagonal_location_groups = [
 
 ]
 
+
+const joined_locations = [
+    {
+        id: 1,
+        lat: 0,
+        lng: 1,
+        norm_lat: 90,
+        norm_lng: 181,
+        postcode: "N7 9RA"
+    },
+    {
+        id: 2,
+        lat: 0,
+        lng: 0,
+        norm_lat: 90,
+        norm_lng: 180,
+        postcode: "NW5 2NJ"
+    },
+    {
+        id: 2,
+        lat: 1,
+        lng: 1,
+        norm_lat: 91,
+        norm_lng: 181,
+        postcode: "NW5 2NJ"
+
+
+    },
+    {
+        id: 2,
+        lat: 2,
+        lng: 2,
+        norm_lat: 92,
+        norm_lng: 182,
+        postcode: "NW5 2NJ"
+    },
+    {
+        id: 2,
+        lat: 3,
+        lng: 3,
+        norm_lat: 93,
+        norm_lng: 183,
+        postcode: "NW5 2NJ"
+    },
+
+    {
+        id: 3,
+        lat: 4,
+        lng: 4,
+        norm_lat: 94,
+        norm_lng: 184,
+        postcode: "N7 2G6"
+    },
+    {
+        id: 4,
+        lat: 4,
+        lng: 5,
+        norm_lat: 94,
+        norm_lng: 185,
+        postcode: "NW4 6RF"
+    }
+]
+const disjoined_locations = [
+    {
+        id: 1,
+        lat: 0,
+        lng: 1,
+        norm_lat: 90,
+        norm_lng: 181,
+        postcode: "N7 9RA"
+    },
+    {
+        id: 2,
+        lat: 0,
+        lng: 0,
+        norm_lat: 90,
+        norm_lng: 180,
+        postcode: "NW5 2NJ"
+    },
+    {
+        id: 2,
+        lat: 1,
+        lng: 1,
+        norm_lat: 91,
+        norm_lng: 181,
+        postcode: "NW5 2NJ"
+
+
+    },
+   {
+        id: 2,
+        lat: 3,
+        lng: 3,
+        norm_lat: 93,
+        norm_lng: 183,
+        postcode: "NW5 2NJ"
+    },
+
+    {
+        id: 3,
+        lat: 4,
+        lng: 4,
+        norm_lat: 94,
+        norm_lng: 184,
+        postcode: "N7 2G6"
+    },
+    {
+        id: 4,
+        lat: 4,
+        lng: 5,
+        norm_lat: 94,
+        norm_lng: 185,
+        postcode: "NW4 6RF"
+    }
+]
+
+
+
+
 it('Does not throw an error', () => {
     expect(() => groupLocations(test_locations_1, 1)).not.toThrow();
 });
@@ -103,8 +222,12 @@ it('Diagonal adjacent groups produce one group - distance: max(lat,lng)', () => 
 
 it('Diagonal adjacent groups produce as many groups as locations - distance: half less than any distance between points', () => {
     expect(groupLocations(diagonal_location_groups, 0.5).length).toEqual(4);
-    
 });
 
-//Todo add test which adds a 'merging' coordinate between two groups and see if the result is one group (it should be!) 
+it('Joined and disjoined location(s) produce 1 and 2 groups respectively', () => {
+    expect(groupLocations(joined_locations, 1).length).toEqual(1);
+    expect(groupLocations(disjoined_locations, 1).length).toEqual(2);
+});
+
+
 
