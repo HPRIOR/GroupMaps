@@ -40,7 +40,6 @@ const test_locations_1 = [
         postcode: "NW4 6RF"
     }
 ]
-
 const diagonal_location_groups = [
     {
         id: 1,
@@ -76,8 +75,6 @@ const diagonal_location_groups = [
     }
 
 ]
-
-
 const joined_locations = [
     {
         id: 1,
@@ -192,9 +189,6 @@ const disjoined_locations = [
         postcode: "NW4 6RF"
     }
 ]
-
-
-
 
 it('Does not throw an error', () => {
     expect(() => groupLocations(test_locations_1, 1)).not.toThrow();
