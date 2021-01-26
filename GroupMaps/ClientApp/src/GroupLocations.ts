@@ -61,7 +61,6 @@ const groupAdjecentGridTiles = (grid: Grid): (Set<string> | null)[] => {
             return null
         visitedCoords.add(currentSquare)
         currentCoordGroup.add(currentSquare)
-        // TODO small optimisation here to skip negative coordinates 
         for (let dir of directions) {
             const newDirection =
                 String(parseInt(currentSquare[0]) + dir[0]) + ',' + String(parseInt(currentSquare[2]) + dir[1])
