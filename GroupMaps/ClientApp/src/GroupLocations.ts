@@ -11,6 +11,14 @@ type Grid = {
     [key: string]: Location
 }
 
+/* 
+    The grid represents a matrix, the size of each square is determined by the groupByDistance. 
+    The grid square each locations coordinate (lat,lng) is in is calculated by the formula:
+        
+        floor(x - min(x) / square-size) , floor(y - min(y) / square-size)
+        
+    Locations are grouped according to those which are in directly adjacent squares of the grid matrix
+ */
 const groupLocations = (locations: Location[], groupByDistance: number): Location[][] => {
     const grid = getLocationPlaceInGrid(locations, groupByDistance);
     const adjacentGridCoords = groupAdjecentGridTiles(grid);
@@ -32,17 +40,16 @@ const getLocationPlaceInGrid = (locations: Location[], groupByDistance: number):
     locations.forEach(location => {
         const coord =
             [Math.floor((location.norm_lat - minLat) / groupByDistance),
-            Math.floor((location.norm_lng - minLng / groupByDistance))].toString();
+                Math.floor((location.norm_lng - minLng) / groupByDistance)].toString();
         grid[coord] ? grid[coord].push(location) : grid[coord] = [location];
     });
-    console.log(grid)
     return grid;
 }
 
 const groupAdjecentGridTiles = (grid: Grid): (Set<string> | null)[] => {
     let tileCoords: Set<string> = new Set(Object.keys(grid));
     let visitedCoords: Set<string> = new Set();
-    const directions = [[0, 1], [1, 0], [-1, 0], [0, -1]]
+    const directions = [[0, 1], [1, 0], [-1, 0], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]]
     const group = (currentSquare: string, currentCoordGroup: Set<string> = new Set()): Set<string> | null => {
         if (!tileCoords.has(currentSquare) || visitedCoords.has(currentSquare))
             return null
