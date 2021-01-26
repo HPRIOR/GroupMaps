@@ -101,7 +101,7 @@ it('Diagonal adjacent groups produce one group - distance: max(lat,lng)', () => 
     expect(groupLocations(diagonal_location_groups, 5).length).toEqual(1);
 });
 
-it('Diagonal adjacent groups produce expected result - distance: half less than any distance between points', () => {
+it('Diagonal adjacent groups produce as many groups as locations - distance: half less than any distance between points', () => {
     expect(groupLocations(diagonal_location_groups, 0.5).length).toEqual(4);
     
 });
