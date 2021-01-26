@@ -49,6 +49,10 @@ it('Produces two groups at distance of 1', () => {
     expect(groupLocations(test_locations_1, 1).length).toEqual(2);
 })
 
-it('Produces 1 group at a distance equal to max(lng, lat)', () => {
-    expect(groupLocations(test_locations_1, 5).length).toEqual(1)
+it('Produces 1 group at a distance equal to max(lat, lng)', () => {
+    expect(groupLocations(test_locations_1, 5).length).toEqual(1);
+})
+
+it('Produces as many groups as locations where distance is half less than any distance between points', () => {
+    expect(groupLocations(test_locations_1, 0.5).length).toEqual(4);
 })
