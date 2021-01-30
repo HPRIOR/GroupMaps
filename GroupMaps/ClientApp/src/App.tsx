@@ -8,9 +8,9 @@ import PostCodeInput from './components/PostCodeInput';
 
 const App = () => {
     const [locations, setLocations]: [Location[], Function] = useState<Location[]>([]);
-    const [postCodeInput, setPostCodeInput] = useState<string>("");
-    const [postCodeInputOnButtonPress, setPostCodeInputWithButton] = useState<string>("");
-    const [distance, setGroupDistance] = useState<number>(1);
+    const [postCodeInput, setPostCodeInput]: [string, Function] = useState<string>("");
+    const [postCodeInputOnButtonPress, setPostCodeInputWithButton]: [string, Function] = useState<string>("");
+    const [distance, setGroupDistance]: [number, Function] = useState<number>(1);
     const [markers, setMarkers] = useState([])
 
 
