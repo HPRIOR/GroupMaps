@@ -341,3 +341,6 @@ healthchecksdb
 /GroupMaps/ClientApp/src/GetApiKey.ts
 /GroupMaps/ClientApp/src/test.tsx
 /GroupMaps/ClientApp/src/test.test.js
+/GroupMaps/ClientApp/src/components/GetApiKey.ts
+/GroupMaps/ClientApp/src/components/GetApiKey.js.map
+/GroupMaps/ClientApp/src/components/GetApiKey.js
