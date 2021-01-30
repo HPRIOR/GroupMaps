@@ -4,7 +4,7 @@ import Location from '../ObjectTypes/Location';
 type Props = {
     locations: Location[],
     postcode: string,
-    handleInputChange: () => void,
+    handleInputChange: (event: React.ChangeEvent ) => void,
     addButtonCallBack: () => void,
     removeButtonCallBack: (id: number) => void
 }
