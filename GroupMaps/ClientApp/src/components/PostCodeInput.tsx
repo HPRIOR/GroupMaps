@@ -1,12 +1,12 @@
-﻿import React from 'react';
+﻿import React, { MouseEvent, ChangeEvent} from 'react';
 import Location from '../ObjectTypes/Location';
 
 type Props = {
     locations: Location[],
     postcode: string,
-    handleInputChange: Function,
-    addButtonCallBack: Function,
-    removeButtonCallBack: Function
+    handleInputChange: () => void,
+    addButtonCallBack: () => void,
+    removeButtonCallBack: (id: number) => void
 }
 
 const PostCodeInput = (props: Props) => {
