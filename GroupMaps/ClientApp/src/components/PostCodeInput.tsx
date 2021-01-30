@@ -1,4 +1,4 @@
-﻿import React, { MouseEvent, ChangeEvent} from 'react';
+﻿import * as React from 'react';
 import Location from '../ObjectTypes/Location';
 
 type Props = {
