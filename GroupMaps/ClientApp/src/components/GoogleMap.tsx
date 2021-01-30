@@ -1,6 +1,7 @@
-﻿import '../styles/GoogleMap.css'
+﻿import '../styles/GoogleMap.css';
 import React, { useEffect } from 'react';
-import { Loader } from "@googlemaps/js-api-loader"
+import { Loader } from "@googlemaps/js-api-loader";
+import getMapsApiKey from './GetApiKey';
 
 
 type Center = {
@@ -9,7 +10,6 @@ type Center = {
 }
 
 type Props = {
-    apiKey: string,
     zoom?: number,
     center: Center
 
@@ -18,7 +18,7 @@ type Props = {
 const GoogleMap = (props: Props) => {
     useEffect(() => {
         const loader = new Loader({
-            apiKey: props.apiKey,
+            apiKey: getMapsApiKey(),
             version: "weekly"
         });
         loader.load().then(() => {
