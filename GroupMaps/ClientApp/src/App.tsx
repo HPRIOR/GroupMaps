@@ -7,7 +7,7 @@ import nextId from "react-id-generator";
 import PostCodeInput from './components/PostCodeInput';
 
 const App = () => {
-    const [locations, setLocations] = useState<Location[]>([]);
+    const [locations, setLocations]: [Location[], Function] = useState<Location[]>([]);
     const [postCodeInput, setPostCodeInput] = useState<string>("");
     const [postCodeInputOnButtonPress, setPostCodeInputWithButton] = useState<string>("");
     const [distance, setGroupDistance] = useState<number>(1);
