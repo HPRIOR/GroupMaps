@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Remove="ClientApp\src\App.tsx" />
+    <TypeScriptCompile Remove="ClientApp\src\components\GetApiKey.ts" />
     <TypeScriptCompile Remove="ClientApp\src\components\PostCodeInput.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\GetApiKey.ts" />
     <TypeScriptCompile Remove="ClientApp\src\GroupLocations.ts" />
