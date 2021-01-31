@@ -44,14 +44,14 @@ const getLocationPlaceInGrid = (locations: Location[], groupByDistance: number):
  For each populated tile in the grid the recursive function 'group' will attempt to visit each 
  adjacent grid square and look for match in the populated tiles 
  */
-const groupAdjecentGridTiles = (grid: Grid): (Set<string> | null)[] => {
+const groupAdjecentGridTiles = (grid: Grid): (Set<string>)[] => {
     let tileCoords: Set<string> = new Set(Object.keys(grid));
     let visitedCoords: Set<string> = new Set();
     const directions = [[0, 1], [1, 0], [-1, 0], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]]
 
     const group = (currentSquare: string, currentCoordGroup: Set<string> = new Set()): Set<string> => {
         if (!tileCoords.has(currentSquare) || visitedCoords.has(currentSquare))
-            return null
+            return new Set();
         visitedCoords.add(currentSquare)
         currentCoordGroup.add(currentSquare)
         for (let dir of directions) {
@@ -67,7 +67,8 @@ const groupAdjecentGridTiles = (grid: Grid): (Set<string> | null)[] => {
             if (!visitedCoords.has(tile))
                 return group(tile);
         })
-        .filter(x => x !== undefined)
+        .filter(x => x !== undefined) as Set<string>[];
+
 
 }
 
