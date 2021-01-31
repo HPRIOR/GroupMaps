@@ -4,9 +4,9 @@ import Location from '../ObjectTypes/Location';
 type Props = {
     locations: Location[],
     postcode: string,
-    handleInputChange: (event: React.ChangeEvent ) => void,
+    handleInputChange: (event: React.ChangeEvent<HTMLInputElement> ) => void,
     addButtonCallBack: () => void,
-    removeButtonCallBack: (id: number) => void
+    removeButtonCallBack: (id: string) => void
 }
 
 const PostCodeInput = (props: Props) => {
