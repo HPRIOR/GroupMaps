@@ -1,5 +1,5 @@
 ﻿type Location = {
-    id: number,
+    id: string,
     lat: number,
     lng: number,
     norm_lng: number,
