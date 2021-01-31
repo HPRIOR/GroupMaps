@@ -1,7 +1,7 @@
 ﻿import Location from './ObjectTypes/Location';
 
 type Grid = {
-    [key: string]: Location
+    [key: string]: Location[]
 }
 
 /* 
@@ -15,9 +15,9 @@ type Grid = {
 const groupLocations = (locations: Location[], groupByDistance: number): Location[][] => {
     const grid = getLocationPlaceInGrid(locations, groupByDistance);
     const adjacentGridCoords = groupAdjecentGridTiles(grid);
-    let adjacentLocations = [];
+    let adjacentLocations: Location[][] = [];
     adjacentGridCoords.forEach(coordGroup => {
-        let group = [];
+        let group: Location[] = [];
         coordGroup.forEach(gridCoord => {
             group = group.concat(grid[gridCoord]);
         });
@@ -27,7 +27,7 @@ const groupLocations = (locations: Location[], groupByDistance: number): Locatio
 }
 
 const getLocationPlaceInGrid = (locations: Location[], groupByDistance: number): Grid => {
-    let grid = {};
+    let grid: Grid = {};
     const minLat = Math.min(...locations.map(x => x.norm_lat));
     const minLng = Math.min(...locations.map(x => x.norm_lng));
     locations.forEach(location => {
