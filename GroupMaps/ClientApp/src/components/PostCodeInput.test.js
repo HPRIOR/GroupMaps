@@ -1,6 +1,7 @@
-﻿import React from 'react';
-import PostCodeInput from './PostCodeInput' ;
+﻿import PostCodeInput from './PostCodeInput' ;
+import React from 'react';
 import { render } from '@testing-library/react';
+
 
 const test_locations = () => [
     {
@@ -36,6 +37,7 @@ const test_locations = () => [
         postcode: "NW4 6RF"
     }
 ]
+
 
 const postCodeInputProp = {
     locations : test_locations,
