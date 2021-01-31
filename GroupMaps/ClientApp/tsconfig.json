@@ -8,7 +8,10 @@
         "removeComments": false,
         "sourceMap": true,
         "target": "es5",
-        "jsx": "react"
+        "jsx": "react",
+        "types": [
+            "googlemaps"
+        ]
     },
     "exclude": [
         "node_modules",
