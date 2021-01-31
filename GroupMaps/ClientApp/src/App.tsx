@@ -22,7 +22,8 @@ const App = () => {
     const removeLocation = (id: string) => {
         setMarkers((previousMarkers: MarkerWithId[]) => {
             const deletedMarker = previousMarkers.find(m => m.id === id);
-            deletedMarker.marker.setMap(null);
+            if (deletedMarker)
+                deletedMarker.marker.setMap(null);
             return previousMarkers.filter(m => m.id !== id);    
         });
         setLocations((previousLocations: Location[]) => previousLocations.filter(l => l.id !== id));
