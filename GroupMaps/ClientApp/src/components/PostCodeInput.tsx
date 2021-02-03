@@ -22,8 +22,8 @@ const PostCodeInput = (props: Props) => {
                     ))
                 }
             </ul>
-            <input type="text" value={props.postcode} onChange={props.handleInputChange}></input>
-            <button type="button" onClick={props.addButtonCallBack}>add</button>
+            <input id="post-code-input" type="text" value={props.postcode} onChange={props.handleInputChange}></input>
+            <button id="add-post-code" type="button" onClick={props.addButtonCallBack}>add</button>
         </div>
     )
 }
