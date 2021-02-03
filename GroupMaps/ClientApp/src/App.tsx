@@ -106,7 +106,7 @@ const App = () => {
     }
     return (
         <div id="main-window">
-            <GoogleMap center={{ lat: 50.736129, lng: -1.98822 }} />
+            <GoogleMap  />
             <PostCodeInput
                 locations={locations}
                 postcode={postCodeInput}
