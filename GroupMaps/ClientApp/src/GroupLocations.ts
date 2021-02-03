@@ -66,6 +66,7 @@ const groupAdjecentGridTiles = (grid: Grid): (Set<string>)[] => {
         .map(tile => {
             if (!visitedCoords.has(tile))
                 return group(tile);
+            else return undefined;
         })
         .filter(x => x !== undefined) as Set<string>[];
 
