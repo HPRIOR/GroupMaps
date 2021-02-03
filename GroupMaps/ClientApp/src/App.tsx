@@ -29,6 +29,7 @@ const App = () => {
         setLocations((previousLocations: Location[]) => previousLocations.filter(l => l.id !== id));
     }
 
+    // fetch post code
     useEffect(() => {
         if (postCodeInputOnButtonPress.length <= 0) return 
         const fetchPostCode = async () => {
@@ -47,7 +48,7 @@ const App = () => {
         };
         fetchPostCode();
 
-    });
+    }, [postCodeInputOnButtonPress]);
 
     const changeLocationState = (data: any) => {
         const id = nextId();
@@ -69,6 +70,7 @@ const App = () => {
         setPostCodeInputWithButton("");
     }
 
+    // set each groups marker
     useEffect(() => {
         if (locations.length === 0) return;
         const groups = groupLocations(locations, distance)
