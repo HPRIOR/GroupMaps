@@ -15,7 +15,7 @@ type Props = {
 
 }
 
-const GoogleMap = (props: Props) => {
+const GoogleMap = () => {
     useEffect(() => {
         const loader = new Loader({
             apiKey: getMapsApiKey(),
@@ -23,11 +23,11 @@ const GoogleMap = (props: Props) => {
         });
         loader.load().then(() => {
             (window as any).map = new (window as any).google.maps.Map(document.getElementById('map'), {
-                zoom: props.zoom === undefined ? 7 : props.zoom,
-                center: props.center
+                zoom: 7,
+                center: {lat: 50.736129, lng: -1.98822}
             })
         });
-    }, [props]);
+    }, []);
 
     return (
         <div id="map"></div>
