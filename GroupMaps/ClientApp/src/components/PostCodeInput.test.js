@@ -56,22 +56,24 @@ const Component = <PostCodeInput
         removeButtonCallBack={postCodeInputProp.removeButtonCallBack}
     />
 
-test('Component is rendered', () => {
-    render(Component)
-});
 
-test('All locations are rendered', () => {
-    const { container } = render(Component);
-    const locations = container.querySelectorAll('li');
-    expect(locations).toHaveLength(4);
-});
+describe('<PostCodeInput/>', () => {
+    it('Component is rendered', () => {
+        render(Component)
+    });
 
-test('Correct postcodes are displayed', () => {
-    const { getByText } = render(Component);
-    getByText('N7 9RA')
-    getByText('NW5 2NJ')
-    getByText('N7 2G6')
-    getByText('NW4 6RF')
-});
+    it('All locations are rendered', () => {
+        const { container } = render(Component);
+        const locations = container.querySelectorAll('li');
+        expect(locations).toHaveLength(4);
+    });
 
+    it('Correct postcodes are displayed', () => {
+        const { getByText } = render(Component);
+        getByText('N7 9RA')
+        getByText('NW5 2NJ')
+        getByText('N7 2G6')
+        getByText('NW4 6RF')
+    });
+});
 
