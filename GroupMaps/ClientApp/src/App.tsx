@@ -70,14 +70,14 @@ const App = () => {
         setPostCodeInputWithButton("");
     }
 
-    // set each groups marker
+    // set each group's marker
     useEffect(() => {
-        if (locations.length === 0) return;
+        if (locations.length === 0 || (window as any).google === undefined) return;
         const groups = groupLocations(locations, distance)
+        const w = (window as any)
         let group_markers: MarkerWithId[] = []
         for (let group of groups) {
             const groupColour = Math.floor(Math.random() * 16777215).toString(16);
-            const w = (window as any)
             let icon = generateIconWith("#" + groupColour)
             for (let location of group) {
                 const marker = new w.google.maps.Marker({
