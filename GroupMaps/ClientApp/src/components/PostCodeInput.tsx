@@ -17,7 +17,7 @@ const PostCodeInput = (props: Props) => {
                     props.locations.map(i => (
                         <li key={i.id}>
                             {i.postcode}
-                            <button type="button" onClick={() => props.removeButtonCallBack(i.id)}>remove</button>
+                            <button className="remove-post-code" type="button" onClick={() => props.removeButtonCallBack(i.id)}>remove</button>
                         </li>
                     ))
                 }
