@@ -72,6 +72,11 @@ const App = () => {
 
     // set each group's marker
     useEffect(() => {
+        /* 
+         The check for google === undefined is to make tests play nice with Maps API. Without this condition
+         google will remaine undefined during the testing of other features of the app (e.g. querying the 
+         postcode API)
+         */
         if (locations.length === 0 || (window as any).google === undefined) return;
         const groups = groupLocations(locations, distance)
         const w = (window as any)
