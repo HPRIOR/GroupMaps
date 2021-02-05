@@ -1,7 +1,7 @@
 ﻿import PostCodeInput from './PostCodeInput' ;
 import React from 'react';
-import { render } from '@testing-library/react';
-
+import { render,  screen } from '@testing-library/react';
+import userEvent from "@testing-library/user-event"
 
 const test_locations = () => [
     {
@@ -75,5 +75,15 @@ describe('<PostCodeInput/>', () => {
         getByText('N7 2G6')
         getByText('NW4 6RF')
     });
+
+    it('Adds and removes input display', () => {
+        render(Component);
+        const button = screen.getByText('-');
+        userEvent.click(button);
+        const notExpected = screen.queryByText( 'N7 9RA');
+        expect(notExpected).toBe(null);
+        userEvent.click(button);
+        screen.getByText('N7 9RA');
+    })
 });
 
