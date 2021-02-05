@@ -18,20 +18,19 @@ const App = () => {
     const [distance, setGroupDistance]: [number, Function] = useState<number>(1);
     const [markers, setMarkers]: [MarkerWithId[], Function] = useState([])
 
-
     const removeLocation = (id: string) => {
         setMarkers((previousMarkers: MarkerWithId[]) => {
             const deletedMarker = previousMarkers.find(m => m.id === id);
             if (deletedMarker)
                 deletedMarker.marker.setMap(null);
-            return previousMarkers.filter(m => m.id !== id);    
+            return previousMarkers.filter(m => m.id !== id);
         });
         setLocations((previousLocations: Location[]) => previousLocations.filter(l => l.id !== id));
     }
 
     // fetch post code
     useEffect(() => {
-        if (postCodeInputOnButtonPress.length <= 0) return 
+        if (postCodeInputOnButtonPress.length <= 0) return
         const fetchPostCode = async () => {
             const url = "https://api.postcodes.io/postcodes/" + postCodeInputOnButtonPress;
             await fetch(url, {
@@ -47,7 +46,6 @@ const App = () => {
                 })
         };
         fetchPostCode();
-
     }, [postCodeInputOnButtonPress]);
 
     const changeLocationState = (data: any) => {
@@ -72,9 +70,9 @@ const App = () => {
 
     // set each group's marker
     useEffect(() => {
-        /* 
+        /*
          The check for google === undefined is to make tests play nice with Maps API. Without this condition
-         google will remaine undefined during the testing of other features of the app (e.g. querying the 
+         google will remaine undefined during the testing of other features of the app (e.g. querying the
          postcode API)
          */
         if (locations.length === 0 || (window as any).google === undefined) return;
@@ -111,7 +109,7 @@ const App = () => {
     }
     return (
         <div id="main-window">
-            <GoogleMap  />
+            <GoogleMap />
             <PostCodeInput
                 locations={locations}
                 postcode={postCodeInput}
@@ -121,7 +119,7 @@ const App = () => {
 
             />
         </div>
-        )
+    )
 }
 
 export default App;
