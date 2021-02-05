@@ -9,6 +9,7 @@ import PostCodeInput from './components/PostCodeInput';
 type MarkerWithId = {
     id: string,
     marker: google.maps.Marker
+    colour: string
 }
 
 const App = () => {
@@ -16,14 +17,14 @@ const App = () => {
     const [postCodeInput, setPostCodeInput]: [string, Function] = useState<string>("");
     const [postCodeInputOnButtonPress, setPostCodeInputWithButton]: [string, Function] = useState<string>("");
     const [distance, setGroupDistance]: [number, Function] = useState<number>(1);
-    const [markers, setMarkers]: [MarkerWithId[], Function] = useState([])
+    const [markers, setMarkers]: [MarkerWithId[][], Function] = useState([])
 
     const removeLocation = (id: string) => {
-        setMarkers((previousMarkers: MarkerWithId[]) => {
-            const deletedMarker = previousMarkers.find(m => m.id === id);
+        setMarkers((previousMarkers: MarkerWithId[][]) => {
+            const deletedMarker = previousMarkers.flat().find(m => m.id === id);
             if (deletedMarker)
                 deletedMarker.marker.setMap(null);
-            return previousMarkers.filter(m => m.id !== id);
+            return previousMarkers.flat().filter(m => m.id !== id);
         });
         setLocations((previousLocations: Location[]) => previousLocations.filter(l => l.id !== id));
     }
@@ -77,19 +78,20 @@ const App = () => {
          */
         if (locations.length === 0 || (window as any).google === undefined) return;
 
-        const groupMarkers: MarkerWithId[] = groupLocations(locations, distance).map(group => {
-            let icon = generateIconWith("#" + Math.floor(Math.random() * 16777215).toString(16));
+        const groupMarkers: MarkerWithId[][] = groupLocations(locations, distance).map(group => {
+            const colour = "#" + Math.floor(Math.random() * 16777215).toString(16);
+            const icon = generateIconWith(colour);
             return group.map(location => {
                     const marker = new (window as any).google.maps.Marker({
                     map: (window as any).map,
                     position: new (window as any).google.maps.LatLng(location.lat, location.lng),
                     icon: icon
                     });
-                return { id: location.id, marker: marker }
+                return { id: location.id, marker: marker, colour: colour }
             });
-        }).flat();
-        setMarkers((marker: MarkerWithId[]) => {
-            marker.forEach(m => m.marker.setMap(null));
+        });
+        setMarkers((marker: MarkerWithId[][]) => {
+            marker.flat().forEach(m => m.marker.setMap(null));
             return groupMarkers
         });
     }, [locations, distance]);
@@ -106,7 +108,7 @@ const App = () => {
     }
     return (
         <div id="main-window">
-            <GoogleMap />
+            {/* <GoogleMap />*/}
             <PostCodeInput
                 locations={locations}
                 postcode={postCodeInput}
