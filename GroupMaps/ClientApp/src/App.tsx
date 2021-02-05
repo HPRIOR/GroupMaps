@@ -6,8 +6,8 @@ import './styles/App.css'
 import nextId from "react-id-generator";
 import PostCodeInput from './components/PostCodeInput';
 
-type MarkerWithId = {
-    id: string,
+type locationInGroup = {
+    location: Location,
     marker: google.maps.Marker
     colour: string
 }
@@ -17,14 +17,14 @@ const App = () => {
     const [postCodeInput, setPostCodeInput]: [string, Function] = useState<string>("");
     const [postCodeInputOnButtonPress, setPostCodeInputWithButton]: [string, Function] = useState<string>("");
     const [distance, setGroupDistance]: [number, Function] = useState<number>(1);
-    const [markers, setMarkers]: [MarkerWithId[][], Function] = useState([])
+    const [locationGroups, setLocationGroups]: [locationInGroup[][], Function] = useState([])
 
     const removeLocation = (id: string) => {
-        setMarkers((previousMarkers: MarkerWithId[][]) => {
-            const deletedMarker = previousMarkers.flat().find(m => m.id === id);
+        setLocationGroups((previousGroups: locationInGroup[][]) => {
+            const deletedMarker = previousGroups.flat().find(m => m.location.id === id);
             if (deletedMarker)
                 deletedMarker.marker.setMap(null);
-            return previousMarkers.flat().filter(m => m.id !== id);
+            return previousGroups.map(group => group.filter(m => m.location.id !== id));
         });
         setLocations((previousLocations: Location[]) => previousLocations.filter(l => l.id !== id));
     }
@@ -69,30 +69,35 @@ const App = () => {
         setPostCodeInputWithButton("");
     }
 
-    // set each group's marker
+    /* 
+     This will generate locationGroups, which represent each locations group, and information regarding that group,
+     such it's associates icon colour, and marker. This is passed into the sidebar.
+     TODO could possibly refactor groups into location 
+    */
     useEffect(() => {
         /*
-         The check for google === undefined is to make tests play nice with Maps API. Without this condition
-         google will remaine undefined during the testing of other features of the app (e.g. querying the
+         The check for google === undefined is to make tests play nice with Maps API. Without this condition,
+         google will remain undefined during the testing of other features of the app (e.g. querying the
          postcode API)
          */
         if (locations.length === 0 || (window as any).google === undefined) return;
 
-        const groupMarkers: MarkerWithId[][] = groupLocations(locations, distance).map(group => {
+        const locationGroups: locationInGroup[][] = groupLocations(locations, distance).map(group => {
             const colour = "#" + Math.floor(Math.random() * 16777215).toString(16);
             const icon = generateIconWith(colour);
             return group.map(location => {
-                    const marker = new (window as any).google.maps.Marker({
+                const marker = new (window as any).google.maps.Marker({
                     map: (window as any).map,
                     position: new (window as any).google.maps.LatLng(location.lat, location.lng),
                     icon: icon
-                    });
-                return { id: location.id, marker: marker, colour: colour }
+                });
+                return { location: location, marker: marker, colour: colour }
             });
         });
-        setMarkers((marker: MarkerWithId[][]) => {
+        setLocationGroups((marker: locationInGroup[][]) => {
+            // remove previous markers from maps API
             marker.flat().forEach(m => m.marker.setMap(null));
-            return groupMarkers
+            return locationGroups
         });
     }, [locations, distance]);
 
@@ -108,7 +113,7 @@ const App = () => {
     }
     return (
         <div id="main-window">
-            {/* <GoogleMap />*/}
+            {/*<GoogleMap />*/}
             <PostCodeInput
                 locations={locations}
                 postcode={postCodeInput}
