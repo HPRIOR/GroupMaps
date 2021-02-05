@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { useState} from 'react';
 import Location from '../ObjectTypes/Location';
 
 type Props = {
@@ -10,9 +10,11 @@ type Props = {
 }
 
 const PostCodeInput = (props: Props) => {
-    return (
-        <div>
-            <ul>
+    const [displayWidget, setDisplayWidget] = useState(true);
+
+    const inputRender = (
+        <>
+           <ul>
                 {
                     props.locations.map(i => (
                         <li key={i.id}>
@@ -24,6 +26,12 @@ const PostCodeInput = (props: Props) => {
             </ul>
             <input id="post-code-input" type="text" value={props.postcode} onChange={props.handleInputChange}></input>
             <button id="add-post-code" type="button" onClick={props.addButtonCallBack}>add</button>
+        </>
+        )
+    return (
+        <div>
+            {displayWidget ? inputRender : null}
+            <div> <button onClick={() => setDisplayWidget(!displayWidget)}>{displayWidget ? "-" : "+"}</button ></div>
         </div>
     )
 }
