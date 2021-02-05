@@ -74,7 +74,7 @@ it('Displays input post code - mock fetch', async () => {
 
     await act(async () => {
         await userEvent.type(postCodeInput, "N7 9RA")
-        await userEvent.click(postCodeButton)
+        userEvent.click(postCodeButton)
     });
 
     getByText(container, "N7 9RA")
@@ -133,7 +133,7 @@ it('Remove button removes postcode', async () => {
 
     await act(async () => {
         await userEvent.type(postCodeInput, "N7 9RA")
-        await userEvent.click(addButton)
+        userEvent.click(addButton)
     });
 
     getByText(container, 'N7 9RA')
@@ -194,11 +194,10 @@ it('Add empty does nothing', async () => {
     act(() => {
         render(<App />, container)
     });
-    const postCodeInput = container.querySelector('#post-code-input');
     const postCodeButton = container.querySelector('#add-post-code');
 
-    await act(async () => {
-        await userEvent.click(postCodeButton)
+    act(() => {
+        userEvent.click(postCodeButton)
     });
 
     const tryGetRemovedPostCode = queryByText(container, 'N7 9RA')
