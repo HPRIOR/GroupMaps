@@ -76,24 +76,21 @@ const App = () => {
          postcode API)
          */
         if (locations.length === 0 || (window as any).google === undefined) return;
-        const groups = groupLocations(locations, distance)
-        const w = (window as any)
-        let group_markers: MarkerWithId[] = []
-        for (let group of groups) {
-            const groupColour = Math.floor(Math.random() * 16777215).toString(16);
-            let icon = generateIconWith("#" + groupColour)
-            for (let location of group) {
-                const marker = new w.google.maps.Marker({
-                    map: w.map,
-                    position: new w.google.maps.LatLng(location.lat, location.lng),
+
+        const groupMarkers: MarkerWithId[] = groupLocations(locations, distance).map(group => {
+            let icon = generateIconWith("#" + Math.floor(Math.random() * 16777215).toString(16));
+            return group.map(location => {
+                    const marker = new (window as any).google.maps.Marker({
+                    map: (window as any).map,
+                    position: new (window as any).google.maps.LatLng(location.lat, location.lng),
                     icon: icon
-                })
-                group_markers.push({ id: location.id, marker: marker });
-            }
-        }
+                    });
+                return { id: location.id, marker: marker }
+            });
+        }).flat();
         setMarkers((marker: MarkerWithId[]) => {
             marker.forEach(m => m.marker.setMap(null));
-            return group_markers
+            return groupMarkers
         });
     }, [locations, distance]);
 
