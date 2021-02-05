@@ -52,7 +52,7 @@ const App = () => {
     const changeLocationState = (data: any) => {
         const id = nextId();
         setLocations((previousLocations: Location[]) => {
-            const newState = [
+            const newState : Location[] = [
                 ...previousLocations,
                 {
                     id: id,
