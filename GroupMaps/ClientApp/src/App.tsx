@@ -6,32 +6,43 @@ import './styles/App.css'
 import nextId from "react-id-generator";
 import PostCodeInput from './components/PostCodeInput';
 
-type locationInGroup = {
-    location: Location,
-    marker: google.maps.Marker
-    colour: string
+type LocationGroup = {
+    colour: string,
+    locationGroup: Location[]
 }
 
 const App = () => {
-    const [locations, setLocations]: [Location[], Function] = useState<Location[]>([]);
+    const [locationGroups, setLocationGroups]: [LocationGroup[], Function] = useState<LocationGroup[]>([]);
     const [postCodeInput, setPostCodeInput]: [string, Function] = useState<string>("");
     const [postCodeInputOnButtonPress, setPostCodeInputWithButton]: [string, Function] = useState<string>("");
     const [distance, setGroupDistance]: [number, Function] = useState<number>(1);
-    const [locationGroups, setLocationGroups]: [locationInGroup[][], Function] = useState([])
 
     const removeLocation = (id: string) => {
-        setLocationGroups((previousGroups: locationInGroup[][]) => {
-            const deletedMarker = previousGroups.flat().find(m => m.location.id === id);
-            if (deletedMarker)
-                deletedMarker.marker.setMap(null);
-            return previousGroups.map(group => group.filter(m => m.location.id !== id));
+        setLocationGroups((previousGroups: LocationGroup[]) => {
+            console.log()
+            previousGroups
+                .map(l => l.locationGroup)
+                .flat()
+                .filter(l => l.id === id)
+                .forEach(l => l.marker?.setMap(null));
+            return groupLocations(
+                previousGroups
+                    .map(l => l.locationGroup)
+                    .flat()
+                    .filter(l => l.id !== id),
+                distance)
+                    .map(group => (
+                        {
+                            colour: "#" + Math.floor(Math.random() * 16777215).toString(16),
+                            locationGroup: group
+                        }
+                    ));
         });
-        setLocations((previousLocations: Location[]) => previousLocations.filter(l => l.id !== id));
     }
 
     // fetch post code
     useEffect(() => {
-        if (postCodeInputOnButtonPress.length <= 0) return
+        if (postCodeInputOnButtonPress.length <= 0) return;
         const fetchPostCode = async () => {
             const url = "https://api.postcodes.io/postcodes/" + postCodeInputOnButtonPress;
             await fetch(url, {
@@ -51,55 +62,49 @@ const App = () => {
 
     const changeLocationState = (data: any) => {
         const id = nextId();
-        setLocations((previousLocations: Location[]) => {
-            const newState : Location[] = [
-                ...previousLocations,
+        setLocationGroups((previousLocationGroups: LocationGroup[]) => {
+            const flattenedLocations: Location[] = [
+                ...previousLocationGroups.map(group => group.locationGroup).flat(),
                 {
                     id: id,
                     lng: data.result.longitude,
                     lat: data.result.latitude,
                     norm_lng: data.result.longitude + 180,
                     norm_lat: data.result.latitude + 90,
-                    postcode: data.result.postcode
-                },
-            ]
-            return newState;
+                    postcode: data.result.postcode,
+                    marker: null
+                }
+            ];
+            const newGroupedLocations: Location[][] = groupLocations(flattenedLocations, distance);
+            return newGroupedLocations.map(group => (
+                {
+                    colour: "#" + Math.floor(Math.random() * 16777215).toString(16),
+                    locationGroup: group
+                }
+            ));
         });
         setPostCodeInput("");
         setPostCodeInputWithButton("");
     }
 
-    /* 
-     This will generate locationGroups, which represent each locations group, and information regarding that group,
-     such it's associates icon colour, and marker. This is passed into the sidebar.
-     TODO could possibly refactor groups into location 
-    */
-    useEffect(() => {
+     useEffect(() => {
         /*
          The check for google === undefined is to make tests play nice with Maps API. Without this condition,
          google will remain undefined during the testing of other features of the app (e.g. querying the
          postcode API)
          */
-        if (locations.length === 0 || (window as any).google === undefined) return;
-
-        const locationGroups: locationInGroup[][] = groupLocations(locations, distance).map(group => {
-            const colour = "#" + Math.floor(Math.random() * 16777215).toString(16);
-            const icon = generateIconWith(colour);
-            return group.map(location => {
-                const marker = new (window as any).google.maps.Marker({
+        if (locationGroups.length === 0 || (window as any).google === undefined) return;
+        locationGroups.forEach(lG => {
+            lG.locationGroup.forEach(l => {
+                l.marker?.setMap(null)
+                l.marker = new (window as any).google.maps.Marker({
                     map: (window as any).map,
-                    position: new (window as any).google.maps.LatLng(location.lat, location.lng),
-                    icon: icon
+                    position: new (window as any).google.maps.LatLng(l.lat, l.lng),
+                    icon: generateIconWith(lG.colour)
                 });
-                return { location: location, marker: marker, colour: colour }
             });
         });
-        setLocationGroups((marker: locationInGroup[][]) => {
-            // remove previous markers from maps API
-            marker.flat().forEach(m => m.marker.setMap(null));
-            return locationGroups
-        });
-    }, [locations, distance]);
+     }, [locationGroups, distance]);
 
     const generateIconWith = (colour: string) => {
         return {
@@ -111,11 +116,12 @@ const App = () => {
             scale: 1,
         };
     }
+
     return (
         <div id="main-window">
-            {/*<GoogleMap />*/}
+            <GoogleMap />
             <PostCodeInput
-                locations={locations}
+                locations={locationGroups.map(l => l.locationGroup).flat()}
                 postcode={postCodeInput}
                 handleInputChange={e => setPostCodeInput(e.target.value)}
                 addButtonCallBack={() => setPostCodeInputWithButton(postCodeInput)}
