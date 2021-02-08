@@ -4,7 +4,8 @@
     lng: number,
     norm_lng: number,
     norm_lat: number,
-    postcode: string
+    postcode: string,
+    marker: google.maps.Marker | null
 }
 
 export default Location;
