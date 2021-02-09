@@ -15,9 +15,15 @@ type Grid = {
 const groupLocations = (locations: Location[], groupByDistance: number): Location[][] => {
     const grid = getLocationPlaceInGrid(locations, groupByDistance);
     const adjacentGridCoords = groupAdjecentGridTiles(grid);
-    return adjacentGridCoords
-        .map(coordGroup => [...coordGroup].map(gridCoord => grid[gridCoord][0]));
-    
+    let adjacentLocations: Location[][] = [];
+    adjacentGridCoords.forEach(coordGroup => {
+        let group: Location[] = [];
+        coordGroup.forEach(gridCoord => {
+            group = group.concat(grid[gridCoord]);
+        });
+        adjacentLocations.push(group);
+    });
+    return adjacentLocations;
 }
 
 const getLocationPlaceInGrid = (locations: Location[], groupByDistance: number): Grid => {

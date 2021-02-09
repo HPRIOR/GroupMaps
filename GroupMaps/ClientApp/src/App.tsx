@@ -40,6 +40,7 @@ const App = () => {
         });
     }
 
+
     // fetch post code
     useEffect(() => {
         if (postCodeInputOnButtonPress.length <= 0) return;
