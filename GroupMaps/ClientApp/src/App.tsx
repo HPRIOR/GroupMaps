@@ -17,7 +17,7 @@ const App = () => {
     const [postCodeInput, setPostCodeInput]: [string, Function] = useState<string>("");
     const [postCodeInputOnButtonPress, setPostCodeInputWithButton]: [string, Function] = useState<string>("");
     const [distance, setGroupDistance]: [number, Function] = useState<number>(1);
-    //const [colours, setColours]: [string[], Function] = useState<string[]>([]);
+    const [colours, setColours]: [string[], Function] = useState<string[]>([]);
 
     const removeLocation = (id: string) => {
         setLocationGroups((previousGroups: LocationGroup[]) => {
@@ -26,18 +26,11 @@ const App = () => {
                 .flat()
                 .filter(l => l.id === id)
                 .forEach(l => l.marker?.setMap(null));
-            return groupLocations(
-                previousGroups
+            return getLocationGroups(groupLocations(previousGroups
                     .map(l => l.locationGroup)
                     .flat()
                     .filter(l => l.id !== id),
-                distance)
-                    .map(group => (
-                        {
-                            colour: "#" + Math.floor(Math.random() * 16777215).toString(16),
-                            locationGroup: group
-                        }
-                    ));
+                distance));
         });
     }
 
@@ -88,12 +81,16 @@ const App = () => {
             getLocationGroups(groupLocations(previousGroups.map(group => group.locationGroup).flat(), distance)));
     }
 
-    const getLocationGroups = (locationGroups: Location[][]): LocationGroup[] => locationGroups.map(group => (
-        {
-            colour: "#" + Math.floor(Math.random() * 16777215).toString(16),
-            locationGroup: group
-        }
-    ));
+    const getLocationGroups = (locationGroups: Location[][]): LocationGroup[] => {
+
+
+        return locationGroups.map(group => (
+            {
+                colour: "#" + Math.floor(Math.random() * 16777215).toString(16),
+                locationGroup: group
+            }
+        ))
+    };
 
 
      useEffect(() => {
