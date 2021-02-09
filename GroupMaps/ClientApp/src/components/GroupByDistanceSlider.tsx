@@ -16,10 +16,10 @@ type Props = {
 const GroupByDistanceSlider = (props: Props) => {
     return (
         <>
-            <input type="range" min="0.0001" max={props.maxRange} value={props.distance} onChange={props.onRangeChange} step='any'/>
+            <input type="range" min="0.0001" max={props.maxRange} value={props.distance} onChange={props.onRangeChange} step='any' />
             <>{props.distance}</>
         </>
-        )
+    );
 }
 
 export default GroupByDistanceSlider;
