@@ -1,9 +1,9 @@
-﻿import App from './App';
+﻿import { getByText, queryByText } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import React from 'react';
-import { render, unmountComponentAtNode } from "react-dom"
+import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import userEvent from "@testing-library/user-event"
-import { getByText, queryByText } from "@testing-library/react"
+import App from './App';
 
 let container = null
 beforeEach(() => {
@@ -20,6 +20,7 @@ afterEach(() => {
 it('App renders', () => {
     render(<App />, container)
 });
+
 
 it('Displays input post code - mock fetch', async () => {
     const fakePostCode = {
@@ -203,3 +204,4 @@ it('Add empty does nothing', async () => {
     const tryGetRemovedPostCode = queryByText(container, 'N7 9RA')
     expect(tryGetRemovedPostCode).toBeNull();
 });
+
