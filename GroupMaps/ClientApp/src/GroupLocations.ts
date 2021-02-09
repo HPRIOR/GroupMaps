@@ -14,9 +14,7 @@ type Grid = {
  */
 const groupLocations = (locations: Location[], groupByDistance: number): Location[][] => {
     const grid = getLocationPlaceInGrid(locations, groupByDistance);
-    console.log(grid)
     const adjacentGridCoords = groupAdjecentGridTiles(grid);
-    console.log(adjacentGridCoords)
     let adjacentLocations: Location[][] = [];
     adjacentGridCoords.forEach(coordGroup => {
         let group: Location[] = [];
