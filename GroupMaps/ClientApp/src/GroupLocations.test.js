@@ -203,6 +203,10 @@ describe('GroupLocations', () => {
         expect(groupLocations(test_locations_1, 5).length).toEqual(1);
     });
 
+    it('Produces as many groups as locations - distance: 0.0002', () => {
+        expect(groupLocations(test_locations_1, 0.001).length).toEqual(4);
+    });
+
     it('Produces one group of length 4 - distance: max(lat, lng)', () => {
 
         expect(groupLocations(test_locations_1, 5).length).toEqual(1);

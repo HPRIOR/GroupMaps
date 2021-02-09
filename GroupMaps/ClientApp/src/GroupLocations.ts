@@ -14,7 +14,9 @@ type Grid = {
  */
 const groupLocations = (locations: Location[], groupByDistance: number): Location[][] => {
     const grid = getLocationPlaceInGrid(locations, groupByDistance);
+    console.log(grid)
     const adjacentGridCoords = groupAdjecentGridTiles(grid);
+    console.log(adjacentGridCoords)
     let adjacentLocations: Location[][] = [];
     adjacentGridCoords.forEach(coordGroup => {
         let group: Location[] = [];
@@ -55,9 +57,12 @@ const groupAdjecentGridTiles = (grid: Grid): (Set<string>)[] => {
         visitedCoords.add(currentSquare)
         currentCoordGroup.add(currentSquare)
         directions
-            .forEach(direction => group(
-                String(parseInt(currentSquare[0]) + direction[0]) + ',' + String(parseInt(currentSquare[2]) + direction[1]),
-                currentCoordGroup)
+            .forEach(direction => {
+                const [x, y] = currentSquare.split(",")
+                group(
+                    String(parseInt(x) + direction[0]) + ',' + String(parseInt(y) + direction[1]),
+                    currentCoordGroup)
+            }
             )
         return currentCoordGroup;
     }
