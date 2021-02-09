@@ -82,6 +82,11 @@ const App = () => {
         setPostCodeInputWithButton("");
     }
 
+    const onRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setGroupDistance(event.target.value)
+        setLocationGroups((previousGroups: LocationGroup[]) => getLocationGroups(groupLocations(previousGroups.map(group => group.locationGroup).flat(), distance)));
+    }
+
     const getLocationGroups = (locationGroups: Location[][]): LocationGroup[] => locationGroups.map(group => (
                 {
                     colour: "#" + Math.floor(Math.random() * 16777215).toString(16),
@@ -120,18 +125,14 @@ const App = () => {
         };
     }
 
-    const onRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLocationGroups((previousGroups: LocationGroup[]) => null)
-        setGroupDistance(event.target.value)
-    }
-
+    
     return (
         <div id="main-window">
-            {/*<GoogleMap />*/}
+            <GoogleMap />
             <GroupByDistanceSlider
                 maxRange={10}
                 distance={distance}
-                onRangeChange={event => setGroupDistance(event.target.value)}
+                onRangeChange={onRangeChange}
             />
             <PostCodeInput
                 locations={locationGroups.map(l => l.locationGroup).flat()}
