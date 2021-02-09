@@ -1,11 +1,11 @@
-﻿import React, { useState, useEffect } from 'react';
-import Location from './ObjectTypes/Location';
-import groupLocations from './GroupLocations'
-import GoogleMap from './components/GoogleMap';
-import './styles/App.css'
+﻿import React, { useEffect, useState } from 'react';
 import nextId from "react-id-generator";
-import PostCodeInput from './components/PostCodeInput';
+import GoogleMap from './components/GoogleMap';
 import GroupByDistanceSlider from './components/GroupByDistanceSlider';
+import PostCodeInput from './components/PostCodeInput';
+import groupLocations from './GroupLocations';
+import Location from './ObjectTypes/Location';
+import './styles/App.css';
 
 type LocationGroup = {
     colour: string,
@@ -17,6 +17,7 @@ const App = () => {
     const [postCodeInput, setPostCodeInput]: [string, Function] = useState<string>("");
     const [postCodeInputOnButtonPress, setPostCodeInputWithButton]: [string, Function] = useState<string>("");
     const [distance, setGroupDistance]: [number, Function] = useState<number>(1);
+    //const [colours, setColours]: [string[], Function] = useState<string[]>([]);
 
     const removeLocation = (id: string) => {
         setLocationGroups((previousGroups: LocationGroup[]) => {
@@ -39,7 +40,6 @@ const App = () => {
                     ));
         });
     }
-
 
     // fetch post code
     useEffect(() => {
@@ -84,15 +84,16 @@ const App = () => {
 
     const onRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setGroupDistance(event.target.value)
-        setLocationGroups((previousGroups: LocationGroup[]) => getLocationGroups(groupLocations(previousGroups.map(group => group.locationGroup).flat(), distance)));
+        setLocationGroups((previousGroups: LocationGroup[]) =>
+            getLocationGroups(groupLocations(previousGroups.map(group => group.locationGroup).flat(), distance)));
     }
 
     const getLocationGroups = (locationGroups: Location[][]): LocationGroup[] => locationGroups.map(group => (
-                {
-                    colour: "#" + Math.floor(Math.random() * 16777215).toString(16),
-                    locationGroup: group
-                }
-            ));
+        {
+            colour: "#" + Math.floor(Math.random() * 16777215).toString(16),
+            locationGroup: group
+        }
+    ));
 
 
      useEffect(() => {
