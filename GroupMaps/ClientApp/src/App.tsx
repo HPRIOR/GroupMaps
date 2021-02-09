@@ -5,6 +5,7 @@ import GoogleMap from './components/GoogleMap';
 import './styles/App.css'
 import nextId from "react-id-generator";
 import PostCodeInput from './components/PostCodeInput';
+import GroupByDistanceSlider from './components/GroupByDistanceSlider';
 
 type LocationGroup = {
     colour: string,
@@ -19,7 +20,6 @@ const App = () => {
 
     const removeLocation = (id: string) => {
         setLocationGroups((previousGroups: LocationGroup[]) => {
-            console.log()
             previousGroups
                 .map(l => l.locationGroup)
                 .flat()
@@ -76,17 +76,19 @@ const App = () => {
                     marker: null
                 }
             ];
-            const newGroupedLocations: Location[][] = groupLocations(flattenedLocations, distance);
-            return newGroupedLocations.map(group => (
+            return getLocationGroups(groupLocations(flattenedLocations, distance));
+        });
+        setPostCodeInput("");
+        setPostCodeInputWithButton("");
+    }
+
+    const getLocationGroups = (locationGroups: Location[][]): LocationGroup[] => locationGroups.map(group => (
                 {
                     colour: "#" + Math.floor(Math.random() * 16777215).toString(16),
                     locationGroup: group
                 }
             ));
-        });
-        setPostCodeInput("");
-        setPostCodeInputWithButton("");
-    }
+
 
      useEffect(() => {
         /*
@@ -118,9 +120,19 @@ const App = () => {
         };
     }
 
+    const onRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setLocationGroups((previousGroups: LocationGroup[]) => null)
+        setGroupDistance(event.target.value)
+    }
+
     return (
         <div id="main-window">
-            <GoogleMap />
+            {/*<GoogleMap />*/}
+            <GroupByDistanceSlider
+                maxRange={10}
+                distance={distance}
+                onRangeChange={event => setGroupDistance(event.target.value)}
+            />
             <PostCodeInput
                 locations={locationGroups.map(l => l.locationGroup).flat()}
                 postcode={postCodeInput}

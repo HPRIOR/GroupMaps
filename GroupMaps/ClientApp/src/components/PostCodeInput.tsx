@@ -10,7 +10,7 @@ type Props = {
 }
 
 const PostCodeInput = (props: Props) => {
-    const [displayWidget, setDisplayWidget] = useState(true);
+    const [displayComponent, setDisplayComponent] = useState(true);
 
     const inputRender = (
         <>
@@ -30,8 +30,8 @@ const PostCodeInput = (props: Props) => {
         )
     return (
         <div>
-            {displayWidget ? inputRender : null}
-            <div> <button onClick={() => setDisplayWidget(!displayWidget)}>{displayWidget ? "-" : "+"}</button ></div>
+            {displayComponent ? inputRender : null}
+            <div> <button onClick={() => setDisplayComponent(!displayComponent)}>{displayComponent ? "-" : "+"}</button ></div>
         </div>
     )
 }
