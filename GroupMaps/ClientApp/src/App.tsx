@@ -145,7 +145,7 @@ const App = () => {
             scale: 1,
         };
     }
-
+    
     const maxDistance = (): number => {
         const sortedLat = locationGroups.map(l => l.locationGroup).flat().map(l => l.lat).sort();
         const sortedLng = locationGroups.map(l => l.locationGroup).flat().map(l => l.lng).sort();
@@ -168,7 +168,6 @@ const App = () => {
                 handleInputChange={e => setPostCodeInput(e.target.value)}
                 addButtonCallBack={() => setPostCodeInputWithButton(postCodeInput)}
                 removeButtonCallBack={removeLocation}
-
             />
         </div>
     )
