@@ -1,4 +1,4 @@
-﻿import Location from './ObjectTypes/Location';
+﻿import Location from '../ObjectTypes/Location';
 
 type Grid = {
     [key: string]: Location[]
