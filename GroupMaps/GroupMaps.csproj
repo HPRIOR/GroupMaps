@@ -36,6 +36,7 @@
     <TypeScriptCompile Remove="ClientApp\src\components\GroupByDistanceSlider.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\components\PostCodeInput.tsx" />
     <TypeScriptCompile Remove="ClientApp\src\GetApiKey.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\GetMaxDistance.ts" />
     <TypeScriptCompile Remove="ClientApp\src\GroupLocations.ts" />
     <TypeScriptCompile Remove="ClientApp\src\ObjectTypes\Location.ts" />
   </ItemGroup>
