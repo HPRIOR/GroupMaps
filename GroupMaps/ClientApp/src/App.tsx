@@ -16,8 +16,20 @@ const App = () => {
     const [locationGroups, setLocationGroups]: [LocationGroup[], Function] = useState<LocationGroup[]>([]);
     const [postCodeInput, setPostCodeInput]: [string, Function] = useState<string>("");
     const [postCodeInputOnButtonPress, setPostCodeInputWithButton]: [string, Function] = useState<string>("");
-    const [distance, setGroupDistance]: [number, Function] = useState<number>(1);
-    const [colours, setColours]: [string[], Function] = useState<string[]>([]);
+    const [distance, setGroupDistance]: [number, Function] = useState<number>(0.000001);
+
+    const colours: string[] = [
+        '#FAEBD7',
+        '#00FFFF',
+        '#7FFFD4',
+        '#0000FF',
+        '#8A2BE2',
+        '#A52A2A',
+        '#5F9EA0',
+        '#D2691E',
+        '#00FFFF',
+        '#006400'
+        ];
 
     const removeLocation = (id: string) => {
         setLocationGroups((previousGroups: LocationGroup[]) => {
@@ -76,17 +88,18 @@ const App = () => {
     }
 
     const onRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setGroupDistance(event.target.value)
+        const value = Number(event.target.value)
+        setGroupDistance(value)
         setLocationGroups((previousGroups: LocationGroup[]) =>
-            getLocationGroups(groupLocations(previousGroups.map(group => group.locationGroup).flat(), distance)));
+            getLocationGroups(groupLocations(previousGroups.map(group => group.locationGroup).flat(), value)));
     }
 
     const getLocationGroups = (locationGroups: Location[][]): LocationGroup[] => {
-
-
-        return locationGroups.map(group => (
+        console.log(locationGroups)
+        console.log(distance)
+        return locationGroups.map((group, i) => (
             {
-                colour: "#" + Math.floor(Math.random() * 16777215).toString(16),
+                colour: colours[i % 10],
                 locationGroup: group
             }
         ))
