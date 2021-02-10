@@ -19,16 +19,16 @@ const App = () => {
     const [distance, setGroupDistance]: [number, Function] = useState<number>(0.000001);
 
     const colours: string[] = [
-        '#FAEBD7',
-        '#00FFFF',
-        '#7FFFD4',
-        '#0000FF',
-        '#8A2BE2',
-        '#A52A2A',
-        '#5F9EA0',
-        '#D2691E',
-        '#00FFFF',
-        '#006400'
+        '#03a8a0',
+        '#66d313',
+        '#039c4b',
+        '#fedf17',
+        '#21409a',
+        '#ff0984',
+        '#04adff',
+        '#f16623',
+        '#e48873',
+        '#f44546'
         ];
 
     const removeLocation = (id: string) => {
