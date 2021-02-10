@@ -30,7 +30,7 @@ const App = () => {
         '#f16623',
         '#e48873',
         '#f44546'
-        ];
+    ];
 
     const removeLocation = (id: string) => {
         setLocationGroups((previousGroups: LocationGroup[]) => {
@@ -40,9 +40,9 @@ const App = () => {
                 .filter(l => l.id === id)
                 .forEach(l => l.marker?.setMap(null));
             return getLocationGroups(groupLocations(previousGroups
-                    .map(l => l.locationGroup)
-                    .flat()
-                    .filter(l => l.id !== id),
+                .map(l => l.locationGroup)
+                .flat()
+                .filter(l => l.id !== id),
                 distance));
         });
     }
@@ -112,7 +112,7 @@ const App = () => {
         const bounds = new google.maps.LatLngBounds();
         markers.forEach(marker => bounds.extend(marker.getPosition() as google.maps.LatLng));
         (window as any).map.fitBounds(bounds)
-        }
+    }
 
     // set markers when locations change
     useEffect(() => {
@@ -133,7 +133,7 @@ const App = () => {
             });
         });
         focusMapOnMarkers();
-     }, [locationGroups]);
+    }, [locationGroups]);
 
     const generateIconWith = (colour: string) => {
         return {
@@ -151,11 +151,10 @@ const App = () => {
         const sortedLng = locationGroups.map(l => l.locationGroup).flat().map(l => l.lng).sort();
         const [minLat, maxLat] = [sortedLat[0], sortedLat[sortedLat.length - 1]]
         const [minLng, maxLng] = [sortedLng[0], sortedLng[sortedLng.length - 1]]
-        const result = GetDistanceFromLatLngInKm(minLat, minLng, maxLat, maxLng)/100;
+        const result = GetDistanceFromLatLngInKm(minLat, minLng, maxLat, maxLng) / 100;
         return isNaN(result) ? 0 : result
     }
 
-    
     return (
         <div id="main-window">
             <GoogleMap />
