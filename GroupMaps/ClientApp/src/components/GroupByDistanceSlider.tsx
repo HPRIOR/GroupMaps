@@ -1,9 +1,8 @@
-﻿import React from 'react';
+﻿import React, { useState} from 'react';
 
 type Props = {
     maxRange: number,
-    onRangeChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    distance: number
+    onClick: (sliderValue: string) => void,
 }
 /*
  * things to consider:
@@ -14,11 +13,13 @@ type Props = {
  */
 
 const GroupByDistanceSlider = (props: Props) => {
+    const [sliderValue, setSliderValue] = useState("");
     return (
-        <>
-            <input type="range" min="0.000001" max={props.maxRange} value={props.distance} onChange={props.onRangeChange} step='any' />
-            <>{props.distance}</>
-        </>
+        <div>
+            <input type="range" min="0.000001" max={props.maxRange} onChange={e => setSliderValue(e.target.value)} value={sliderValue} step='any' />
+            <button onClick={() => props.onClick(sliderValue)} type="button">Change group distance</button>
+            <>{ sliderValue}</>
+        </div>
     );
 }
 
