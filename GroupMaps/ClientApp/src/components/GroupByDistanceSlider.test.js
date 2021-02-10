@@ -7,10 +7,4 @@ it('Renders Component', () => {
     render(<GroupByDistanceSlider />);
 });
 
-it('Renders correct correct starting value', () => {
-    act(() => {
-        render(<GroupByDistanceSlider distance="10" onRangeChange={() => {}} />)})
-    screen.getByText("10")
-});
-
 
