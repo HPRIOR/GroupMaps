@@ -104,7 +104,17 @@ const App = () => {
         ))
     };
 
-    // set markers when locations change 
+    const focusMapOnMarkers = () => {
+        const markers = locationGroups
+            .flatMap(group => group.locationGroup.map(location => location.marker))
+            .filter(m => m !== null) as google.maps.Marker[];
+        if (markers.length === 0) return;
+        const bounds = new google.maps.LatLngBounds();
+        markers.forEach(marker => bounds.extend(marker.getPosition() as google.maps.LatLng));
+        (window as any).map.fitBounds(bounds)
+        }
+
+    // set markers when locations change
     useEffect(() => {
         /*
          The check for google === undefined is to make tests play nice with Maps API. Without this condition,
@@ -122,6 +132,7 @@ const App = () => {
                 });
             });
         });
+        focusMapOnMarkers();
      }, [locationGroups]);
 
     const generateIconWith = (colour: string) => {
