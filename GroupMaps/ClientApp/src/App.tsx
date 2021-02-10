@@ -3,15 +3,11 @@ import nextId from "react-id-generator";
 import GoogleMap from './components/GoogleMap';
 import GroupByDistanceSlider from './components/GroupByDistanceSlider';
 import PostCodeInput from './components/PostCodeInput';
+import { LocationGroup } from './ObjectTypes/LocationGroup';
 import GetDistanceFromLatLngInKm from './Modules/GetMaxDistance';
 import groupLocations from './Modules/GroupLocations';
 import Location from './ObjectTypes/Location';
 import './styles/App.css';
-
-type LocationGroup = {
-    colour: string,
-    locationGroup: Location[]
-}
 
 const App = () => {
     const [locationGroups, setLocationGroups]: [LocationGroup[], Function] = useState<LocationGroup[]>([]);
