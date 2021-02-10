@@ -88,7 +88,7 @@ const App = () => {
         setPostCodeInputWithButton("");
     }
 
-    const onRangeChange = (sliderValue: string) => {
+    const onSliderSubmit = (sliderValue: string) => {
         const value = Number(sliderValue)
         setGroupDistance(value)
         setLocationGroups((previousGroups: LocationGroup[]) =>
@@ -104,8 +104,8 @@ const App = () => {
         ))
     };
 
-
-     useEffect(() => {
+    // set markers when locations change 
+    useEffect(() => {
         /*
          The check for google === undefined is to make tests play nice with Maps API. Without this condition,
          google will remain undefined during the testing of other features of the app (e.g. querying the
@@ -122,7 +122,7 @@ const App = () => {
                 });
             });
         });
-     }, [locationGroups, distance]);
+     }, [locationGroups]);
 
     const generateIconWith = (colour: string) => {
         return {
@@ -150,7 +150,7 @@ const App = () => {
             <GoogleMap />
             <GroupByDistanceSlider
                 maxRange={maxDistance()}
-                onClick={onRangeChange}
+                onClick={onSliderSubmit}
             />
             <PostCodeInput
                 locations={locationGroups.map(l => l.locationGroup).flat()}
