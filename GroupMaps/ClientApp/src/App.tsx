@@ -3,7 +3,8 @@ import nextId from "react-id-generator";
 import GoogleMap from './components/GoogleMap';
 import GroupByDistanceSlider from './components/GroupByDistanceSlider';
 import PostCodeInput from './components/PostCodeInput';
-import groupLocations from './GroupLocations';
+import GetDistanceFromLatLngInKm from './Modules/GetMaxDistance';
+import groupLocations from './Modules/GroupLocations';
 import Location from './ObjectTypes/Location';
 import './styles/App.css';
 
@@ -87,16 +88,14 @@ const App = () => {
         setPostCodeInputWithButton("");
     }
 
-    const onRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = Number(event.target.value)
+    const onRangeChange = (sliderValue: string) => {
+        const value = Number(sliderValue)
         setGroupDistance(value)
         setLocationGroups((previousGroups: LocationGroup[]) =>
             getLocationGroups(groupLocations(previousGroups.map(group => group.locationGroup).flat(), value)));
     }
 
     const getLocationGroups = (locationGroups: Location[][]): LocationGroup[] => {
-        console.log(locationGroups)
-        console.log(distance)
         return locationGroups.map((group, i) => (
             {
                 colour: colours[i % 10],
@@ -136,14 +135,22 @@ const App = () => {
         };
     }
 
+    const maxDistance = (): number => {
+        const sortedLat = locationGroups.map(l => l.locationGroup).flat().map(l => l.lat).sort();
+        const sortedLng = locationGroups.map(l => l.locationGroup).flat().map(l => l.lng).sort();
+        const [minLat, maxLat] = [sortedLat[0], sortedLat[sortedLat.length - 1]]
+        const [minLng, maxLng] = [sortedLng[0], sortedLng[sortedLng.length - 1]]
+        const result = GetDistanceFromLatLngInKm(minLat, minLng, maxLat, maxLng)/100;
+        return isNaN(result) ? 0 : result
+    }
+
     
     return (
         <div id="main-window">
             <GoogleMap />
             <GroupByDistanceSlider
-                maxRange={10}
-                distance={distance}
-                onRangeChange={onRangeChange}
+                maxRange={maxDistance()}
+                onClick={onRangeChange}
             />
             <PostCodeInput
                 locations={locationGroups.map(l => l.locationGroup).flat()}
