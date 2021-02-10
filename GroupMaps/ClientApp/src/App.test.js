@@ -21,7 +21,6 @@ it('App renders', () => {
     render(<App />, container)
 });
 
-
 it('Displays input post code - mock fetch', async () => {
     const fakePostCode = {
         "status": 200,
@@ -204,4 +203,3 @@ it('Add empty does nothing', async () => {
     const tryGetRemovedPostCode = queryByText(container, 'N7 9RA')
     expect(tryGetRemovedPostCode).toBeNull();
 });
-

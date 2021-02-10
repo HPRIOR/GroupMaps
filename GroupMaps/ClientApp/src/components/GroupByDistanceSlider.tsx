@@ -1,4 +1,4 @@
-﻿import React, { useState} from 'react';
+﻿import React, { useState } from 'react';
 
 type Props = {
     maxRange: number,
@@ -7,9 +7,9 @@ type Props = {
 /*
  * things to consider:
  * Max range will be the max distance between any point
- * the slider should be disabled when there are no locations 
+ * the slider should be disabled when there are no locations
  * step interval should change depending on the max distance
- * 
+ *
  */
 
 const GroupByDistanceSlider = (props: Props) => {
@@ -18,7 +18,7 @@ const GroupByDistanceSlider = (props: Props) => {
         <div>
             <input type="range" min="0.000001" max={props.maxRange} onChange={e => setSliderValue(e.target.value)} value={sliderValue} step='any' />
             <button onClick={() => props.onClick(sliderValue)} type="button">Change group distance</button>
-            <>{ sliderValue}</>
+            <>{sliderValue}</>
         </div>
     );
 }

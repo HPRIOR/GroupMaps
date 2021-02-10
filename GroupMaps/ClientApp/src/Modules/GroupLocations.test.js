@@ -99,8 +99,6 @@ const joined_locations = [
         norm_lat: 91,
         norm_lng: 181,
         postcode: "NW5 2NJ"
-
-
     },
     {
         id: 2,
@@ -160,10 +158,8 @@ const disjoined_locations = [
         norm_lat: 91,
         norm_lng: 181,
         postcode: "NW5 2NJ"
-
-
     },
-   {
+    {
         id: 2,
         lat: 3,
         lng: 3,
@@ -208,7 +204,6 @@ describe('GroupLocations', () => {
     });
 
     it('Produces one group of length 4 - distance: max(lat, lng)', () => {
-
         expect(groupLocations(test_locations_1, 5).length).toEqual(1);
         const group = groupLocations(test_locations_1, 5)[0]
         expect(group.length).toEqual(4);
@@ -234,8 +229,4 @@ describe('GroupLocations', () => {
         expect(groupLocations(joined_locations, 1).length).toEqual(1);
         expect(groupLocations(disjoined_locations, 1).length).toEqual(2);
     });
-
-
 });
-
-

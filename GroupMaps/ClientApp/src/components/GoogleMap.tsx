@@ -3,8 +3,6 @@ import React, { useEffect } from 'react';
 import { Loader } from "@googlemaps/js-api-loader";
 import getMapsApiKey from './GetApiKey';
 
-
-
 const GoogleMap = () => {
     useEffect(() => {
         const loader = new Loader({
@@ -14,14 +12,14 @@ const GoogleMap = () => {
         loader.load().then(() => {
             (window as any).map = new (window as any).google.maps.Map(document.getElementById('map'), {
                 zoom: 7,
-                center: {lat: 50.736129, lng: -1.98822}
+                center: { lat: 50.736129, lng: -1.98822 }
             })
         });
     }, []);
 
     return (
         <div id="map"></div>
-        )
+    )
 }
 
 export default GoogleMap;

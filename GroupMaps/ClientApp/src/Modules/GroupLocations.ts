@@ -4,12 +4,12 @@ type Grid = {
     [key: string]: Location[]
 }
 
-/* 
-    The grid represents a matrix, the size of each square is determined by the groupByDistance. 
+/*
+    The grid represents a matrix, the size of each square is determined by the groupByDistance.
     The grid square each locations coordinate (lat,lng) is in is calculated by the formula:
-        
+
         floor(x - min(x) / square-size) , floor(y - min(y) / square-size)
-        
+
     Locations are grouped according to those which are in directly adjacent squares of the grid matrix
  */
 const groupLocations = (locations: Location[], groupByDistance: number): Location[][] => {
@@ -33,16 +33,15 @@ const getLocationPlaceInGrid = (locations: Location[], groupByDistance: number):
     locations.forEach(location => {
         const coord =
             [Math.floor((location.norm_lat - minLat) / groupByDistance),
-                Math.floor((location.norm_lng - minLng) / groupByDistance)].toString();
+            Math.floor((location.norm_lng - minLng) / groupByDistance)].toString();
         grid[coord] ? grid[coord].push(location) : grid[coord] = [location];
     });
     return grid;
 }
 
-
 /*
- For each populated tile in the grid the recursive function 'group' will attempt to visit each 
- adjacent grid square and look for match in the populated tiles 
+ For each populated tile in the grid the recursive function 'group' will attempt to visit each
+ adjacent grid square and look for match in the populated tiles
  */
 const groupAdjecentGridTiles = (grid: Grid): (Set<string>)[] => {
     let tileCoords: Set<string> = new Set(Object.keys(grid));
@@ -72,8 +71,6 @@ const groupAdjecentGridTiles = (grid: Grid): (Set<string>)[] => {
             else return undefined;
         })
         .filter(x => x !== undefined) as Set<string>[];
-
-
 }
 
 export default groupLocations

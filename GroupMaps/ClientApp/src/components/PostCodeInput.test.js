@@ -1,6 +1,6 @@
-﻿import PostCodeInput from './PostCodeInput' ;
+﻿import PostCodeInput from './PostCodeInput';
 import React from 'react';
-import { render,  screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from "@testing-library/user-event"
 
 const test_locations = () => [
@@ -38,24 +38,21 @@ const test_locations = () => [
     }
 ]
 
-
 const postCodeInputProp = {
-    locations : test_locations,
+    locations: test_locations,
     postcode: "test",
     handleInputChange: () => { },
     addButtonCallBack: () => { },
-    removeButtonCallBack: () => {}
-
+    removeButtonCallBack: () => { }
 }
 
 const Component = <PostCodeInput
-        locations={postCodeInputProp.locations()}
-        postcode={postCodeInputProp.postcode}
-        handleInputChange={postCodeInputProp.handleInputChange}
-        addButtonCallBack={postCodeInputProp.addButtonCallBack}
-        removeButtonCallBack={postCodeInputProp.removeButtonCallBack}
-    />
-
+    locations={postCodeInputProp.locations()}
+    postcode={postCodeInputProp.postcode}
+    handleInputChange={postCodeInputProp.handleInputChange}
+    addButtonCallBack={postCodeInputProp.addButtonCallBack}
+    removeButtonCallBack={postCodeInputProp.removeButtonCallBack}
+/>
 
 describe('<PostCodeInput/>', () => {
     it('Component is rendered', () => {
@@ -80,10 +77,9 @@ describe('<PostCodeInput/>', () => {
         render(Component);
         const button = screen.getByText('-');
         userEvent.click(button);
-        const notExpected = screen.queryByText( 'N7 9RA');
+        const notExpected = screen.queryByText('N7 9RA');
         expect(notExpected).toBe(null);
         userEvent.click(button);
         screen.getByText('N7 9RA');
     })
 });
-
