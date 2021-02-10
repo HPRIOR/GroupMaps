@@ -4,16 +4,6 @@ import { Loader } from "@googlemaps/js-api-loader";
 import getMapsApiKey from './GetApiKey';
 
 
-type Center = {
-    lat: number,
-    lng: number
-}
-
-type Props = {
-    zoom?: number,
-    center: Center
-
-}
 
 const GoogleMap = () => {
     useEffect(() => {
